@@ -83,17 +83,19 @@ jobs:
             api.scorecard.dev:443
             github.com:443
             objects.githubusercontent.com:443
+            release-assets.githubusercontent.com:443
             raw.githubusercontent.com:443
             static.rust-lang.org:443
             static.crates.io:443
             index.crates.io:443
             *.ubuntu.com:80
             *.ubuntu.com:443
-            packages.microsoft.com:443
+            *.packages.microsoft.com:443
             *.freebsd.org:443
             *.openbsd.org:443
             *.netbsd.org:443
             *.alpinelinux.org:443
+            dl-cdn.alpinelinux.org:443
             *.archlinux.org:443
             *.pkgbuild.com:443
             *.fedoraproject.org:443
@@ -112,6 +114,8 @@ jobs:
       - name: Install Rust
         if: matrix.os.type == 'native'
         uses: dtolnay/rust-toolchain@e97e2d8cc328f1b50210efc529dca0028893a2d9 # v1
+        with:
+          toolchain: nightly
 
       - name: Setup Rust cache
         if: matrix.os.type == 'native'
