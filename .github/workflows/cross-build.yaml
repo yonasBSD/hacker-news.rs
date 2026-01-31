@@ -65,7 +65,6 @@ jobs:
           # Specialized Linux
           - { name: Alpine, runner: ubuntu-latest, type: alpine }
           - { name: Arch, runner: ubuntu-latest, type: arch }
-          - { name: Slackware, runner: ubuntu-latest, type: vm }
 
     runs-on: ${{ matrix.os.runner }}
 
@@ -100,7 +99,6 @@ jobs:
             *.fedoraproject.org:443
             *.opensuse.org:443
             *.rockylinux.org:443
-            slackware.osuosl.org:80
             *.pool.ntp.org:443
             time.cloudflare.com:443
             taskfile.dev:443
@@ -144,7 +142,7 @@ jobs:
         run: task test
 
       # ===========================================
-      # VM-based (BSD, Slackware)
+      # VM-based (BSD)
       # ===========================================
       - name: Run tests in FreeBSD VM
         if: matrix.os.name == 'FreeBSD'
@@ -165,17 +163,6 @@ jobs:
           prepare: |
             pkg_add curl rust go
             env GOBIN=/usr/local/bin go install github.com/go-task/task/v3/cmd/task@latest
-          run: task test
-
-      - name: Run tests in Slackware VM
-        if: matrix.os.name == 'Slackware'
-        uses: vmactions/slackware-vm@v1
-        with:
-          usesh: true
-          sync: rsync
-          prepare: |
-            slackpkg update && slackpkg install -y rust
-            sh -c "$(curl --location https://taskfile.dev/install.sh)" -- -d -b /usr/local/bin
           run: task test
 
       # ===========================================
