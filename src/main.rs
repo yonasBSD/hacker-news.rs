@@ -1,8 +1,9 @@
+use std::error::Error;
+
 use clap::{Parser, ValueEnum};
 use colored::*;
 use indicatif::{ProgressBar, ProgressStyle};
 use serde::Deserialize;
-use std::error::Error;
 
 // --- Data Models ---
 
@@ -65,9 +66,13 @@ fn main() -> Result<(), Box<dyn Error>> {
     // 2. Set up Progress Bar
     // Comments: indicatif helps manage user expectations during blocking I/O
     let pb = ProgressBar::new(limit as u64);
-    pb.set_style(ProgressStyle::default_bar()
-        .template("{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})")?
-        .progress_chars("#>-"));
+    pb.set_style(
+        ProgressStyle::default_bar()
+            .template(
+                "{spinner:.green} [{elapsed_precise}] [{bar:40.cyan/blue}] {pos}/{len} ({eta})",
+            )?
+            .progress_chars("#>-"),
+    );
 
     let mut stories = Vec::new();
 
