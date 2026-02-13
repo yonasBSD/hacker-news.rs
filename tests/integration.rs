@@ -1,6 +1,7 @@
+use std::error::Error;
+
 use clap::{Parser, ValueEnum};
 use serde::Deserialize;
-use std::error::Error;
 
 // --- Data Models ---
 
@@ -73,7 +74,7 @@ fn main() -> Result<(), Box<dyn Error>> {
                     story.url.as_deref().unwrap_or("No URL")
                 );
                 println!("    User: {}\n", story.by);
-            }
+            },
             Err(e) => eprintln!("Error fetching story {}: {}", id, e),
         }
     }
@@ -126,7 +127,8 @@ mod tests {
     }
 
     /// Smoke test for the HN API.
-    /// Note: This requires internet access and checks if the endpoint is still alive.
+    /// Note: This requires internet access and checks if the endpoint is still
+    /// alive.
     #[test]
     fn test_api_endpoint_alive() {
         let url = "https://hacker-news.firebaseio.com/v0/topstories.json";
